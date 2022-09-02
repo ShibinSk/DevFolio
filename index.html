@@ -18,6 +18,7 @@
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -669,46 +670,28 @@
                       </h5>
                     </div>
                     <div>
-                      <form action="https://script.google.com/macros/s/AKfycbyHOp4DUUWQcM5xT2lunWzorVkHbNdzFUsHREsUCPOSzBIlVAtY/exec" method="post" id="submit-form">
+                      <form id="submit-form" action=""  role="form" class="php-email-form mt-4">
                         <div class="row">
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" >
-                              <span id="s1" style="color: red;  font-size: 15px;"></span>
-                            </div>
+                          <div class="col-md-6 form-group">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
                           </div>
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" >
-                              <span id="s2" style="color: red; font-size: 15px;"></span>
-                            </div>
-                          </div>
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" >
-                              <span id="s3" style="color: red;  font-size: 15px;"></span>
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <input type="text" class="form-control" name="message" id="message" placeholder="message" >
-                              <span id="s4" style="color: red;  font-size: 15px; "></span>
-                              
-                            </div>
-                          
-                          </div>
-                          <!-- <div class="col-md-12 text-center my-3">
-                            <div class="loading"></div>
-                            <div class="error-message"></div>
-                            <div class="sent-message"></div>
-                          </div> -->
-                          <div class=" smt col-md-12 text-center">
-
-                            <input type="submit" value="Submit" onclick="return validate()">
-                            <!-- <button type="submit" class="button button-a button-big button-rouded  "">Send Message</button> -->
+                          <div class="col-md-6 form-group mt-3 mt-md-0">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
                           </div>
                         </div>
-                      </form>
+                        <div class="form-group mt-3">
+                          <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group mt-3">
+                          <textarea id="message" class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                        </div>
+                        <div class="my-3">
+                          <div class="loading">Loading</div>
+                          <div class="error-message"></div>
+                          <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center"><button type="submit">Send Message</button></div>
+                      </form>                
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -783,7 +766,7 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
  
         $("#submit-form").submit((e)=>{
             e.preventDefault()
@@ -794,14 +777,14 @@
                 success:function (response){
                     alert("Form submitted successfully")
                     window.location.reload()
-                    //window.location.href="https://google.com"
+                    window.location.href="https://google.com"
                 },
                 error:function (err){
                     alert("Something Error")
     
                 }
             })
-        })
+        } )
     
     
      
@@ -896,7 +879,46 @@
 
 
 
-  </script>
+  </script> -->
+  <script>
+    function  auth(){
+      
+      let name1 = document.getElementById("name").value;
+      let subjec1 = document.getElementById("subject").value;
+      let message1 = document.getElementById("message").value;
+      let checker = (isNaN(subjec1) && isNaN(name1) && isNaN(message1))
+      if(checker){
+        return 0;
+      }else{
+        return 10;
+      }
+    }
+    $("#submit-form").submit((e)=>{
+  
+        e.preventDefault()
+        let rev = auth();
+        if(rev === 0){
+
+        $.ajax({
+          
+            url:"https://script.google.com/macros/s/AKfycbyHOp4DUUWQcM5xT2lunWzorVkHbNdzFUsHREsUCPOSzBIlVAtY/exec",
+            data:$("#submit-form").serialize(),
+            method:"post",
+            success:function (response){
+                alert("Form submitted successfully")
+                window.location.reload()
+            },
+            error:function (err){
+                alert("Something Error")
+
+            }
+        })
+      }else{
+        alert("incurret info")
+      }
+    })
+</script>
+
    
 
 
